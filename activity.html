@@ -38,16 +38,16 @@
             formData.append('description', document.getElementById('description').value);
             formData.append('price', document.getElementById('price').value);
 
-            callAPI('http://localhost:3000/activities', 'POST', formData, true);
+            callAPI('https://symfony-9z0y.onrender.com/activities', 'POST', formData, true);
         }
 
         function getAllActivities() {
-            callAPI('http://localhost:3000/activities/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/activities/bulk', 'GET');
         }
 
         function getActivityById() {
             const id = document.getElementById('activityId').value;
-            callAPI(`http://localhost:3000/activities/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/activities/${id}`, 'GET');
         }
 
         function updateActivity() {
@@ -59,12 +59,12 @@
                 description: document.getElementById('updateDescription').value,
                 price: document.getElementById('updatePrice').value,
             };
-            callAPI(`http://localhost:3000/activities/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/activities/${id}`, 'PATCH', body);
         }
 
         function deleteActivity() {
             const id = document.getElementById('deleteActivityId').value;
-            callAPI(`http://localhost:3000/activities/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/activities/${id}`, 'DELETE');
         }
     </script>
 </head>

@@ -27,12 +27,12 @@
         }
 
         function getAllComboDetails() {
-            callAPI('http://localhost:3000/combo-details/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/combo-details/bulk', 'GET');
         }
 
         function getComboDetailById() {
             const id = document.getElementById('comboDetailId').value;
-            callAPI(`http://localhost:3000/combo-details/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/combo-details/${id}`, 'GET');
         }
 
         function updateComboDetail() {
@@ -42,7 +42,7 @@
                 hotelId: document.getElementById('updateHotelId').value,
                 activityId: document.getElementById('updateActivityId').value,
             };
-            callAPI(`http://localhost:3000/combo-details/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/combo-details/${id}`, 'PATCH', body);
         }
     </script>
 </head>

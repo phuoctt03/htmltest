@@ -50,16 +50,16 @@
             formData.append('hotelId', document.getElementById('comboHotelId').value);
             formData.append('activityId', document.getElementById('comboActivityId').value);
 
-            callAPI('http://localhost:3000/combos', 'POST', formData, true);
+            callAPI('https://symfony-9z0y.onrender.com/combos', 'POST', formData, true);
         }
 
         function getAllCombos() {
-            callAPI('http://localhost:3000/combos/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/combos/bulk', 'GET');
         }
 
         function getComboById() {
             const id = document.getElementById('comboId').value;
-            callAPI(`http://localhost:3000/combos/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/combos/${id}`, 'GET');
         }
 
         function updateCombo() {
@@ -69,12 +69,12 @@
                 description: document.getElementById('updateComboDescription').value,
                 price: document.getElementById('updateComboPrice').value,
             };
-            callAPI(`http://localhost:3000/combos/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/combos/${id}`, 'PATCH', body);
         }
 
         function deleteCombo() {
             const id = document.getElementById('deleteComboId').value;
-            callAPI(`http://localhost:3000/combos/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/combos/${id}`, 'DELETE');
         }
     </script>
 </head>

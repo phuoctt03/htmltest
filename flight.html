@@ -51,16 +51,16 @@
             formData.append('endLocation', document.getElementById('endLocation').value);
             formData.append('price', document.getElementById('price').value);
 
-            callAPI('http://localhost:3000/flights', 'POST', formData, true);
+            callAPI('https://symfony-9z0y.onrender.com/flights', 'POST', formData, true);
         }
 
         function getAllFlights() {
-            callAPI('http://localhost:3000/flights/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/flights/bulk', 'GET');
         }
 
         function getFlightById() {
             const id = document.getElementById('flightId').value;
-            callAPI(`http://localhost:3000/flights/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/flights/${id}`, 'GET');
         }
 
         function updateFlight() {
@@ -74,12 +74,12 @@
                 endLocation: document.getElementById('updateEndLocation').value,
                 price: document.getElementById('updatePrice').value,
             };
-            callAPI(`http://localhost:3000/flights/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/flights/${id}`, 'PATCH', body);
         }
 
         function deleteFlight() {
             const id = document.getElementById('deleteFlightId').value;
-            callAPI(`http://localhost:3000/flights/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/flights/${id}`, 'DELETE');
         }
     </script>
 </head>

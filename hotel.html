@@ -39,16 +39,16 @@
             formData.append('price', document.getElementById('price').value);
             formData.append('description', document.getElementById('description').value);
 
-            callAPI('http://localhost:3000/hotels', 'POST', formData, true);
+            callAPI('https://symfony-9z0y.onrender.com/hotels', 'POST', formData, true);
         }
 
         function getAllHotels() {
-            callAPI('http://localhost:3000/hotels/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/hotels/bulk', 'GET');
         }
 
         function getHotelById() {
             const id = document.getElementById('hotelId').value;
-            callAPI(`http://localhost:3000/hotels/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/hotels/${id}`, 'GET');
         }
 
         function updateHotel() {
@@ -61,12 +61,12 @@
                 price: document.getElementById('updatePrice').value,
                 description: document.getElementById('updateDescription').value,
             };
-            callAPI(`http://localhost:3000/hotels/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/hotels/${id}`, 'PATCH', body);
         }
 
         function deleteHotel() {
             const id = document.getElementById('deleteHotelId').value;
-            callAPI(`http://localhost:3000/hotels/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/hotels/${id}`, 'DELETE');
         }
     </script>
 </head>

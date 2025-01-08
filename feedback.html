@@ -33,41 +33,41 @@
                 rating: document.getElementById('rating').value,
                 comment: document.getElementById('comment').value,
             };
-            callAPI('http://localhost:3000/feedbacks', 'POST', body);
+            callAPI('https://symfony-9z0y.onrender.com/feedbacks', 'POST', body);
         }
 
         function bulkReadFeedback() {
-            callAPI('http://localhost:3000/feedbacks/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/feedbacks/bulk', 'GET');
         }
 
         function readFeedback() {
             const id = document.getElementById('feedbackId').value;
-            callAPI(`http://localhost:3000/feedbacks/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/feedbacks/${id}`, 'GET');
         }
 
         function bulkReadFeedbackFlight() {
             const id = document.getElementById('flightId').value;
-            callAPI(`http://localhost:3000/feedbacks/flight/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/feedbacks/flight/${id}`, 'GET');
         }
 
         function bulkReadFeedbackHotel() {
             const id = document.getElementById('hotelId').value;
-            callAPI(`http://localhost:3000/feedbacks/hotel/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/feedbacks/hotel/${id}`, 'GET');
         }
 
         function bulkReadFeedbackActivity() {
             const id = document.getElementById('activityId').value;
-            callAPI(`http://localhost:3000/feedbacks/activity/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/feedbacks/activity/${id}`, 'GET');
         }
 
         function bulkReadFeedbackCombo() {
             const id = document.getElementById('comboId').value;
-            callAPI(`http://localhost:3000/feedbacks/combo/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/feedbacks/combo/${id}`, 'GET');
         }
 
         function bulkReadFeedbackUser() {
             const id = document.getElementById('userId').value;
-            callAPI(`http://localhost:3000/feedbacks/user/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/feedbacks/user/${id}`, 'GET');
         }
 
         function updateFeedback() {
@@ -78,12 +78,12 @@
                 rating: document.getElementById('updateRating').value,
                 comment: document.getElementById('updateComment').value,
             };
-            callAPI(`http://localhost:3000/feedbacks/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/feedbacks/${id}`, 'PATCH', body);
         }
 
         function deleteFeedback() {
             const id = document.getElementById('deleteFeedbackId').value;
-            callAPI(`http://localhost:3000/feedbacks/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/feedbacks/${id}`, 'DELETE');
         }
     </script>
 </head>

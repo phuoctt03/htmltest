@@ -50,16 +50,16 @@
             formData.append('amount', document.getElementById('promoAmount').value);
             formData.append('conditions', document.getElementById('promoConditions').value);
 
-            callAPI('http://localhost:3000/promos', 'POST', formData, true);
+            callAPI('https://symfony-9z0y.onrender.com/promos', 'POST', formData, true);
         }
 
         function getAllPromos() {
-            callAPI('http://localhost:3000/promos/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/promos/bulk', 'GET');
         }
 
         function getPromoById() {
             const id = document.getElementById('promoId').value;
-            callAPI(`http://localhost:3000/promos/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/promos/${id}`, 'GET');
         }
 
         function updatePromo() {
@@ -72,12 +72,12 @@
                 amount: document.getElementById('updatePromoAmount').value,
                 conditions: document.getElementById('updatePromoConditions').value,
             };
-            callAPI(`http://localhost:3000/promos/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/promos/${id}`, 'PATCH', body);
         }
 
         function deletePromo() {
             const id = document.getElementById('deletePromoId').value;
-            callAPI(`http://localhost:3000/promos/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/promos/${id}`, 'DELETE');
         }
     </script>
 </head>

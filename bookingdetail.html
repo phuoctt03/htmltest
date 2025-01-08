@@ -38,12 +38,12 @@
         }
 
         function bulkRead() {
-            callAPI('http://localhost:3000/booking-details/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/booking-details/bulk', 'GET');
         }
 
         function readBookingDetail() {
             const id = document.getElementById('bookingDetailId').value;
-            callAPI(`http://localhost:3000/booking-details/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/booking-details/${id}`, 'GET');
         }
 
         function updateBookingDetail() {
@@ -53,12 +53,12 @@
                 checkInDate: formatDateToYMDHIS(document.getElementById('updateCheckInDate').value),
                 checkOutDate: formatDateToYMDHIS(document.getElementById('updateCheckOutDate').value),
             };
-            callAPI(`http://localhost:3000/booking-details/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/booking-details/${id}`, 'PATCH', body);
         }
 
         function deleteBookingDetail() {
             const id = document.getElementById('deleteBookingDetailId').value;
-            callAPI(`http://localhost:3000/booking-details/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/booking-details/${id}`, 'DELETE');
         }
     </script>
 </head>

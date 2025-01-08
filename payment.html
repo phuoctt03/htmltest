@@ -32,21 +32,21 @@
                 bookingId: document.getElementById('bookingId').value,
                 paymentMethod: document.getElementById('paymentMethod').value,
             };
-            callAPI('http://localhost:3000/payments', 'POST', body);
+            callAPI('https://symfony-9z0y.onrender.com/payments', 'POST', body);
         }
 
         function bulkReadPayments() {
-            callAPI('http://localhost:3000/payments/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/payments/bulk', 'GET');
         }
 
         function readPayment() {
             const id = document.getElementById('paymentId').value;
-            callAPI(`http://localhost:3000/payments/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/payments/${id}`, 'GET');
         }
 
         function deletePayment() {
             const id = document.getElementById('deletePaymentId').value;
-            callAPI(`http://localhost:3000/payments/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/payments/${id}`, 'DELETE');
         }
     </script>
 </head>

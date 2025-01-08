@@ -34,7 +34,7 @@
                 phone: document.getElementById('signupPhone').value,
                 address: document.getElementById('signupAddress').value,
             };
-            callAPI('http://localhost:3000/signup', 'POST', body);
+            callAPI('https://symfony-9z0y.onrender.com/signup', 'POST', body);
         }
 
         function loginUser() {
@@ -42,20 +42,20 @@
                 username: document.getElementById('loginUsername').value,
                 password: document.getElementById('loginPassword').value,
             };
-            callAPI('http://localhost:3000/login', 'POST', body);
+            callAPI('https://symfony-9z0y.onrender.com/login', 'POST', body);
         }
 
         function getAllUsers() {
-            callAPI('http://localhost:3000/users/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/users/bulk', 'GET');
         }
 
         function getUserById() {
             const id = document.getElementById('getUserId').value;
-            callAPI(`http://localhost:3000/users/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/users/${id}`, 'GET');
         }
 
         function getMe() {
-            callAPI('http://localhost:3000/users', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/users', 'GET');
         }
 
         function updateUser() {
@@ -68,12 +68,12 @@
                 address: document.getElementById('updateAddress').value,
                 role: document.getElementById('updateRole').value,
             };
-            callAPI(`http://localhost:3000/users/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/users/${id}`, 'PATCH', body);
         }
 
         function deleteUser() {
             const id = document.getElementById('deleteUserId').value;
-            callAPI(`http://localhost:3000/users/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/users/${id}`, 'DELETE');
         }
     </script>
 </head>

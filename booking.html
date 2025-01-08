@@ -50,16 +50,16 @@
                 checkInDate: formatDateToYMDHIS(document.getElementById('checkInDate').value),
                 checkOutDate: formatDateToYMDHIS(document.getElementById('checkOutDate').value)
             };
-            callAPI('http://localhost:3000/bookings', 'POST', formData);
+            callAPI('https://symfony-9z0y.onrender.com/bookings', 'POST', formData);
         }
 
         function getAllBookings() {
-            callAPI('http://localhost:3000/bookings/bulk', 'GET');
+            callAPI('https://symfony-9z0y.onrender.com/bookings/bulk', 'GET');
         }
 
         function getBookingById() {
             const id = document.getElementById('bookingId').value;
-            callAPI(`http://localhost:3000/bookings/${id}`, 'GET');
+            callAPI(`https://symfony-9z0y.onrender.com/bookings/${id}`, 'GET');
         }
 
         function updateBooking() {
@@ -68,12 +68,12 @@
                 totalPrice: document.getElementById('updateTotalPrice').value,
                 status: document.getElementById('updateStatus').value
             };
-            callAPI(`http://localhost:3000/bookings/${id}`, 'PATCH', body);
+            callAPI(`https://symfony-9z0y.onrender.com/bookings/${id}`, 'PATCH', body);
         }
 
         function deleteBooking() {
             const id = document.getElementById('deleteBookingId').value;
-            callAPI(`http://localhost:3000/bookings/${id}`, 'DELETE');
+            callAPI(`https://symfony-9z0y.onrender.com/bookings/${id}`, 'DELETE');
         }
     </script>
 </head>
