@@ -45,6 +45,31 @@
             callAPI(`http://localhost:3000/feedbacks/${id}`, 'GET');
         }
 
+        function bulkReadFeedbackFlight() {
+            const id = document.getElementById('flightId').value;
+            callAPI(`http://localhost:3000/feedbacks/flight/${id}`, 'GET');
+        }
+
+        function bulkReadFeedbackHotel() {
+            const id = document.getElementById('hotelId').value;
+            callAPI(`http://localhost:3000/feedbacks/hotel/${id}`, 'GET');
+        }
+
+        function bulkReadFeedbackActivity() {
+            const id = document.getElementById('activityId').value;
+            callAPI(`http://localhost:3000/feedbacks/activity/${id}`, 'GET');
+        }
+
+        function bulkReadFeedbackCombo() {
+            const id = document.getElementById('comboId').value;
+            callAPI(`http://localhost:3000/feedbacks/combo/${id}`, 'GET');
+        }
+
+        function bulkReadFeedbackUser() {
+            const id = document.getElementById('userId').value;
+            callAPI(`http://localhost:3000/feedbacks/user/${id}`, 'GET');
+        }
+
         function updateFeedback() {
             const id = document.getElementById('updateFeedbackId').value;
             const body = {
@@ -87,6 +112,41 @@
         <label>Feedback ID:</label>
         <input type="number" id="feedbackId">
         <button onclick="readFeedback()">Get Feedback</button>
+    </div>
+
+    <h2>Get Feedbacks by Flight ID</h2>
+    <div>
+        <label>Flight ID:</label>
+        <input type="number" id="flightId">
+        <button onclick="bulkReadFeedbackFlight()">Get Feedbacks</button>
+    </div>
+
+    <h2>Get Feedbacks by Hotel ID</h2>
+    <div>
+        <label>Hotel ID:</label>
+        <input type="number" id="hotelId">
+        <button onclick="bulkReadFeedbackHotel()">Get Feedbacks</button>
+    </div>
+
+    <h2>Get Feedbacks by Activity ID</h2>
+    <div>
+        <label>Activity ID:</label>
+        <input type="number" id="activityId">
+        <button onclick="bulkReadFeedbackActivity()">Get Feedbacks</button>
+    </div>
+
+    <h2>Get Feedbacks by Combo ID</h2>
+    <div>
+        <label>Combo ID:</label>
+        <input type="number" id="comboId">
+        <button onclick="bulkReadFeedbackCombo()">Get Feedbacks</button>
+    </div>
+
+    <h2>Get Feedbacks by User ID</h2>
+    <div>
+        <label>User ID:</label>
+        <input type="number" id="userId">
+        <button onclick="bulkReadFeedbackUser()">Get Feedbacks</button>
     </div>
 
     <h2>Update Feedback</h2>
