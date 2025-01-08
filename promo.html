@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Promo API</title>
+    <script>
+        async function callAPI(endpoint, method, body = null, isFile = false) {
+            const token = document.getElementById('token').value;
+            const headers = {
+                'Authorization': `Bearer ${token}`
+            };
+            if (!isFile) {
+                headers['Content-Type'] = 'application/json';
+            }
+
+            const options = {
+                method: method,
+                headers: headers,
+            };
+
+            if (body) {
+                options.body = isFile ? body : JSON.stringify(body);
+            }
+
+            const response = await fetch(endpoint, options);
+            const result = await response.json();
+            document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function formatDateToYMDHIS(datetimeLocalValue) {
+            const date = new Date(datetimeLocalValue);
+            const year = date.getUTCFullYear();
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(date.getUTCDate()).padStart(2, '0');
+            const hours = String(date.getUTCHours()).padStart(2, '0');
+            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        function createPromo() {
+            const formData = new FormData();
+            const file = document.getElementById('promoFile').files[0];
+            formData.append('file', file);
+            formData.append('name', document.getElementById('promoName').value);
+            formData.append('description', document.getElementById('promoDescription').value);
+            formData.append('discount', document.getElementById('promoDiscount').value);
+            formData.append('expiredDate', formatDateToYMDHIS(document.getElementById('promoExpiredDate').value));
+            formData.append('amount', document.getElementById('promoAmount').value);
+            formData.append('conditions', document.getElementById('promoConditions').value);
+
+            callAPI('http://localhost:3000/promos', 'POST', formData, true);
+        }
+
+        function getAllPromos() {
+            callAPI('http://localhost:3000/promos/bulk', 'GET');
+        }
+
+        function getPromoById() {
+            const id = document.getElementById('promoId').value;
+            callAPI(`http://localhost:3000/promos/${id}`, 'GET');
+        }
+
+        function updatePromo() {
+            const id = document.getElementById('updatePromoId').value;
+            const body = {
+                name: document.getElementById('updatePromoName').value,
+                description: document.getElementById('updatePromoDescription').value,
+                discount: document.getElementById('updatePromoDiscount').value,
+                expiredDate: formatDateToYMDHIS(document.getElementById('updatePromoExpiredDate').value),
+                amount: document.getElementById('updatePromoAmount').value,
+                conditions: document.getElementById('updatePromoConditions').value,
+            };
+            callAPI(`http://localhost:3000/promos/${id}`, 'PATCH', body);
+        }
+
+        function deletePromo() {
+            const id = document.getElementById('deletePromoId').value;
+            callAPI(`http://localhost:3000/promos/${id}`, 'DELETE');
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Promo API</h1>
+
+    <div>
+        <label for="token">JWT Token:</label>
+        <input type="text" id="token" placeholder="Enter your JWT token">
+    </div>
+
+    <h2>Create Promo</h2>
+    <div>
+        <label>Name:</label> <input type="text" id="promoName"><br>
+        <label>Description:</label> <textarea id="promoDescription"></textarea><br>
+        <label>Discount:</label> <input type="number" id="promoDiscount"><br>
+        <label>Expired Date (YYYY-MM-DD HH:MM:SS):</label> <input type="datetime-local" id="promoExpiredDate"><br>
+        <label>Amount:</label> <input type="number" id="promoAmount"><br>
+        <label>Conditions:</label> <textarea id="promoConditions"></textarea><br>
+        <label>File:</label> <input type="file" id="promoFile"><br>
+        <button onclick="createPromo()">Create Promo</button>
+    </div>
+
+    <h2>Get All Promos</h2>
+    <button onclick="getAllPromos()">Get All Promos</button>
+
+    <h2>Get Promo by ID</h2>
+    <div>
+        <label>Promo ID:</label> <input type="text" id="promoId">
+        <button onclick="getPromoById()">Get Promo</button>
+    </div>
+
+    <h2>Update Promo</h2>
+    <div>
+        <label>Promo ID:</label> <input type="text" id="updatePromoId"><br>
+        <label>Name:</label> <input type="text" id="updatePromoName"><br>
+        <label>Description:</label> <textarea id="updatePromoDescription"></textarea><br>
+        <label>Discount:</label> <input type="number" id="updatePromoDiscount"><br>
+        <label>Expired Date (YYYY-MM-DD HH:MM:SS):</label> <input type="datetime-local" id="updatePromoExpiredDate"><br>
+        <label>Amount:</label> <input type="number" id="updatePromoAmount"><br>
+        <label>Conditions:</label> <textarea id="updatePromoConditions"></textarea><br>
+        <button onclick="updatePromo()">Update Promo</button>
+    </div>
+
+    <h2>Delete Promo</h2>
+    <div>
+        <label>Promo ID:</label> <input type="text" id="deletePromoId">
+        <button onclick="deletePromo()">Delete Promo</button>
+    </div>
+
+    <h2>Response</h2>
+    <pre id="response"></pre>
+</body>
+</html>

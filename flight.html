@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Flight API</title>
+    <script>
+        async function callAPI(endpoint, method, body = null, isFile = false) {
+            const token = document.getElementById('token').value;
+            const headers = {
+                'Authorization': `Bearer ${token}`
+            };
+            if (!isFile) {
+                headers['Content-Type'] = 'application/json';
+            }
+            
+            const options = {
+                method: method,
+                headers: headers,
+            };
+
+            if (body) {
+                options.body = isFile ? body : JSON.stringify(body);
+            }
+
+            const response = await fetch(endpoint, options);
+            const result = await response.json();
+            document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function formatDateToYMDHIS(datetimeLocalValue) {
+            const date = new Date(datetimeLocalValue);
+            const year = date.getUTCFullYear();
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(date.getUTCDate()).padStart(2, '0');
+            const hours = String(date.getUTCHours()).padStart(2, '0');
+            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        function createFlight() {
+            const formData = new FormData();
+            const file = document.getElementById('file').files[0];
+            formData.append('file', file);
+            formData.append('brand', document.getElementById('brand').value);
+            formData.append('emptySlot', document.getElementById('emptySlot').value);
+            formData.append('startTime', formatDateToYMDHIS(document.getElementById('startTime').value));
+            formData.append('endTime', formatDateToYMDHIS(document.getElementById('endTime').value));
+            formData.append('startLocation', document.getElementById('startLocation').value);
+            formData.append('endLocation', document.getElementById('endLocation').value);
+            formData.append('price', document.getElementById('price').value);
+
+            callAPI('http://localhost:3000/flights', 'POST', formData, true);
+        }
+
+        function getAllFlights() {
+            callAPI('http://localhost:3000/flights/bulk', 'GET');
+        }
+
+        function getFlightById() {
+            const id = document.getElementById('flightId').value;
+            callAPI(`http://localhost:3000/flights/${id}`, 'GET');
+        }
+
+        function updateFlight() {
+            const id = document.getElementById('updateFlightId').value;
+            const body = {
+                brand: document.getElementById('updateBrand').value,
+                emptySlot: document.getElementById('updateEmptySlot').value,
+                startTime: formatDateToYMDHIS(document.getElementById('updateStartTime').value),
+                endTime: formatDateToYMDHIS(document.getElementById('updateEndTime').value),
+                startLocation: document.getElementById('updateStartLocation').value,
+                endLocation: document.getElementById('updateEndLocation').value,
+                price: document.getElementById('updatePrice').value,
+            };
+            callAPI(`http://localhost:3000/flights/${id}`, 'PATCH', body);
+        }
+
+        function deleteFlight() {
+            const id = document.getElementById('deleteFlightId').value;
+            callAPI(`http://localhost:3000/flights/${id}`, 'DELETE');
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Flight API</h1>
+
+    <div>
+        <label for="token">JWT Token:</label>
+        <input type="text" id="token" placeholder="Enter your JWT token">
+    </div>
+
+    <h2>Create Flight</h2>
+    <div>
+        <label>Brand:</label> <input type="text" id="brand"><br>
+        <label>Empty Slot:</label> <input type="text" id="emptySlot"><br>
+        <label>Start Time (YYYY-MM-DD HH:mm:ss):</label> <input type="datetime-local" id="startTime"><br>
+        <label>End Time (YYYY-MM-DD HH:mm:ss):</label> <input type="datetime-local" id="endTime"><br>
+        <label>Start Location:</label> <input type="text" id="startLocation"><br>
+        <label>End Location:</label> <input type="text" id="endLocation"><br>
+        <label>Price:</label> <input type="text" id="price"><br>
+        <label>File:</label> <input type="file" id="file"><br>
+        <button onclick="createFlight()">Create Flight</button>
+    </div>
+
+    <h2>Get All Flights</h2>
+    <button onclick="getAllFlights()">Get All Flights</button>
+
+    <h2>Get Flight by ID</h2>
+    <div>
+        <label>Flight ID:</label> <input type="text" id="flightId">
+        <button onclick="getFlightById()">Get Flight</button>
+    </div>
+
+    <h2>Update Flight</h2>
+    <div>
+        <label>Flight ID:</label> <input type="text" id="updateFlightId"><br>
+        <label>Brand:</label> <input type="text" id="updateBrand"><br>
+        <label>Empty Slot:</label> <input type="text" id="updateEmptySlot"><br>
+        <label>Start Time (YYYY-MM-DD HH:mm:ss):</label> <input type="datetime-local" id="updateStartTime"><br>
+        <label>End Time (YYYY-MM-DD HH:mm:ss):</label> <input type="datetime-local" id="updateEndTime"><br>
+        <label>Start Location:</label> <input type="text" id="updateStartLocation"><br>
+        <label>End Location:</label> <input type="text" id="updateEndLocation"><br>
+        <label>Price:</label> <input type="text" id="updatePrice"><br>
+        <button onclick="updateFlight()">Update Flight</button>
+    </div>
+
+    <h2>Delete Flight</h2>
+    <div>
+        <label>Flight ID:</label> <input type="text" id="deleteFlightId">
+        <button onclick="deleteFlight()">Delete Flight</button>
+    </div>
+
+    <h2>Response</h2>
+    <pre id="response"></pre>
+</body>
+</html>

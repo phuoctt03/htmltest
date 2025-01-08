@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Combo Detail API</title>
+    <script>
+        async function callAPI(endpoint, method, body = null) {
+            const token = document.getElementById('token').value;
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+
+            const options = {
+                method: method,
+                headers: headers,
+            };
+
+            if (body) {
+                options.body = JSON.stringify(body);
+            }
+
+            const response = await fetch(endpoint, options);
+            const result = await response.json();
+            document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function getAllComboDetails() {
+            callAPI('http://localhost:3000/combo-details/bulk', 'GET');
+        }
+
+        function getComboDetailById() {
+            const id = document.getElementById('comboDetailId').value;
+            callAPI(`http://localhost:3000/combo-details/${id}`, 'GET');
+        }
+
+        function updateComboDetail() {
+            const id = document.getElementById('updateComboDetailId').value;
+            const body = {
+                flightId: document.getElementById('updateFlightId').value,
+                hotelId: document.getElementById('updateHotelId').value,
+                activityId: document.getElementById('updateActivityId').value,
+            };
+            callAPI(`http://localhost:3000/combo-details/${id}`, 'PATCH', body);
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Combo Detail API</h1>
+
+    <div>
+        <label for="token">JWT Token:</label>
+        <input type="text" id="token" placeholder="Enter your JWT token">
+    </div>
+
+    <h2>Get All Combo Details</h2>
+    <button onclick="getAllComboDetails()">Get All Combo Details</button>
+
+    <h2>Get Combo Detail by ID</h2>
+    <div>
+        <label>Combo Detail ID:</label> <input type="text" id="comboDetailId">
+        <button onclick="getComboDetailById()">Get Combo Detail</button>
+    </div>
+
+    <h2>Update Combo Detail</h2>
+    <div>
+        <label>Combo Detail ID:</label> <input type="text" id="updateComboDetailId"><br>
+        <label>Flight ID:</label> <input type="text" id="updateFlightId"><br>
+        <label>Hotel ID:</label> <input type="text" id="updateHotelId"><br>
+        <label>Activity ID:</label> <input type="text" id="updateActivityId"><br>
+        <button onclick="updateComboDetail()">Update Combo Detail</button>
+    </div>
+
+    <h2>Response</h2>
+    <pre id="response"></pre>
+</body>
+</html>

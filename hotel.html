@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Hotel API</title>
+    <script>
+        async function callAPI(endpoint, method, body = null, isFile = false) {
+            const token = document.getElementById('token').value;
+            const headers = {
+                'Authorization': `Bearer ${token}`
+            };
+            if (!isFile) {
+                headers['Content-Type'] = 'application/json';
+            }
+
+            const options = {
+                method: method,
+                headers: headers,
+            };
+
+            if (body) {
+                options.body = isFile ? body : JSON.stringify(body);
+            }
+
+            const response = await fetch(endpoint, options);
+            const result = await response.json();
+            document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function createHotel() {
+            const formData = new FormData();
+            const file = document.getElementById('file').files[0];
+            formData.append('file', file);
+            formData.append('name', document.getElementById('name').value);
+            formData.append('location', document.getElementById('location').value);
+            formData.append('phone', document.getElementById('phone').value);
+            formData.append('emptyRoom', document.getElementById('emptyRoom').value);
+            formData.append('price', document.getElementById('price').value);
+            formData.append('description', document.getElementById('description').value);
+
+            callAPI('http://localhost:3000/hotels', 'POST', formData, true);
+        }
+
+        function getAllHotels() {
+            callAPI('http://localhost:3000/hotels/bulk', 'GET');
+        }
+
+        function getHotelById() {
+            const id = document.getElementById('hotelId').value;
+            callAPI(`http://localhost:3000/hotels/${id}`, 'GET');
+        }
+
+        function updateHotel() {
+            const id = document.getElementById('updateHotelId').value;
+            const body = {
+                name: document.getElementById('updateName').value,
+                location: document.getElementById('updateLocation').value,
+                phone: document.getElementById('updatePhone').value,
+                emptyRoom: document.getElementById('updateEmptyRoom').value,
+                price: document.getElementById('updatePrice').value,
+                description: document.getElementById('updateDescription').value,
+            };
+            callAPI(`http://localhost:3000/hotels/${id}`, 'PATCH', body);
+        }
+
+        function deleteHotel() {
+            const id = document.getElementById('deleteHotelId').value;
+            callAPI(`http://localhost:3000/hotels/${id}`, 'DELETE');
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Hotel API</h1>
+
+    <div>
+        <label for="token">JWT Token:</label>
+        <input type="text" id="token" placeholder="Enter your JWT token">
+    </div>
+
+    <h2>Create Hotel</h2>
+    <div>
+        <label>Name:</label> <input type="text" id="name"><br>
+        <label>Location:</label> <input type="text" id="location"><br>
+        <label>Phone:</label> <input type="text" id="phone"><br>
+        <label>Empty Room:</label> <input type="number" id="emptyRoom"><br>
+        <label>Price:</label> <input type="number" id="price"><br>
+        <label>Description:</label> <textarea id="description"></textarea><br>
+        <label>File:</label> <input type="file" id="file"><br>
+        <button onclick="createHotel()">Create Hotel</button>
+    </div>
+
+    <h2>Get All Hotels</h2>
+    <button onclick="getAllHotels()">Get All Hotels</button>
+
+    <h2>Get Hotel by ID</h2>
+    <div>
+        <label>Hotel ID:</label> <input type="text" id="hotelId">
+        <button onclick="getHotelById()">Get Hotel</button>
+    </div>
+
+    <h2>Update Hotel</h2>
+    <div>
+        <label>Hotel ID:</label> <input type="text" id="updateHotelId"><br>
+        <label>Name:</label> <input type="text" id="updateName"><br>
+        <label>Location:</label> <input type="text" id="updateLocation"><br>
+        <label>Phone:</label> <input type="text" id="updatePhone"><br>
+        <label>Empty Room:</label> <input type="number" id="updateEmptyRoom"><br>
+        <label>Price:</label> <input type="number" id="updatePrice"><br>
+        <label>Description:</label> <textarea id="updateDescription"></textarea><br>
+        <button onclick="updateHotel()">Update Hotel</button>
+    </div>
+
+    <h2>Delete Hotel</h2>
+    <div>
+        <label>Hotel ID:</label> <input type="text" id="deleteHotelId">
+        <button onclick="deleteHotel()">Delete Hotel</button>
+    </div>
+
+    <h2>Response</h2>
+    <pre id="response"></pre>
+</body>
+</html>

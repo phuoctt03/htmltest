@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Feedback API</title>
+    <script>
+        async function callAPI(endpoint, method, body = null) {
+            const token = document.getElementById('token').value;
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+
+            const options = {
+                method: method,
+                headers: headers,
+            };
+
+            if (body) {
+                options.body = JSON.stringify(body);
+            }
+
+            const response = await fetch(endpoint, options);
+            const result = await response.json();
+            document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function createFeedback() {
+            const body = {
+                ratedType: document.getElementById('ratedType').value,
+                relatedId: document.getElementById('relatedId').value,
+                rating: document.getElementById('rating').value,
+                comment: document.getElementById('comment').value,
+            };
+            callAPI('http://localhost:3000/feedbacks', 'POST', body);
+        }
+
+        function bulkReadFeedback() {
+            callAPI('http://localhost:3000/feedbacks/bulk', 'GET');
+        }
+
+        function readFeedback() {
+            const id = document.getElementById('feedbackId').value;
+            callAPI(`http://localhost:3000/feedbacks/${id}`, 'GET');
+        }
+
+        function updateFeedback() {
+            const id = document.getElementById('updateFeedbackId').value;
+            const body = {
+                ratedType: document.getElementById('updateRatedType').value,
+                relatedId: document.getElementById('updateRelatedId').value,
+                rating: document.getElementById('updateRating').value,
+                comment: document.getElementById('updateComment').value,
+            };
+            callAPI(`http://localhost:3000/feedbacks/${id}`, 'PATCH', body);
+        }
+
+        function deleteFeedback() {
+            const id = document.getElementById('deleteFeedbackId').value;
+            callAPI(`http://localhost:3000/feedbacks/${id}`, 'DELETE');
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Feedback API</h1>
+
+    <div>
+        <label for="token">JWT Token:</label>
+        <input type="text" id="token" placeholder="Enter your JWT token">
+    </div>
+
+    <h2>Create Feedback</h2>
+    <div>
+        <label>Rated Type:</label> <input type="text" id="ratedType"><br>
+        <label>Related ID:</label> <input type="number" id="relatedId"><br>
+        <label>Rating:</label> <input type="number" id="rating" step="0.1"><br>
+        <label>Comment:</label> <textarea id="comment"></textarea><br>
+        <button onclick="createFeedback()">Create Feedback</button>
+    </div>
+
+    <h2>Get All Feedbacks</h2>
+    <button onclick="bulkReadFeedback()">Get All Feedbacks</button>
+
+    <h2>Get Feedback by ID</h2>
+    <div>
+        <label>Feedback ID:</label>
+        <input type="number" id="feedbackId">
+        <button onclick="readFeedback()">Get Feedback</button>
+    </div>
+
+    <h2>Update Feedback</h2>
+    <div>
+        <label>Feedback ID:</label> <input type="number" id="updateFeedbackId"><br>
+        <label>Rated Type:</label> <input type="text" id="updateRatedType"><br>
+        <label>Related ID:</label> <input type="number" id="updateRelatedId"><br>
+        <label>Rating:</label> <input type="number" id="updateRating" step="0.1"><br>
+        <label>Comment:</label> <textarea id="updateComment"></textarea><br>
+        <button onclick="updateFeedback()">Update Feedback</button>
+    </div>
+
+    <h2>Delete Feedback</h2>
+    <div>
+        <label>Feedback ID:</label>
+        <input type="number" id="deleteFeedbackId">
+        <button onclick="deleteFeedback()">Delete Feedback</button>
+    </div>
+
+    <h2>Response</h2>
+    <pre id="response"></pre>
+</body>
+</html>

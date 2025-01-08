@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Booking API</title>
+    <script>
+        async function callAPI(endpoint, method, body = null, isFile = false) {
+            const token = document.getElementById('token').value;
+            const headers = {
+                'Authorization': `Bearer ${token}`
+            };
+            if (!isFile) {
+                headers['Content-Type'] = 'application/json';
+            }
+
+            const options = {
+                method: method,
+                headers: headers,
+            };
+
+            if (body) {
+                options.body = isFile ? body : JSON.stringify(body);
+            }
+
+            const response = await fetch(endpoint, options);
+            const result = await response.json();
+            document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function formatDateToYMDHIS(datetimeLocalValue) {
+            const date = new Date(datetimeLocalValue);
+            const year = date.getUTCFullYear();
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(date.getUTCDate()).padStart(2, '0');
+            const hours = String(date.getUTCHours()).padStart(2, '0');
+            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        function createBooking() {
+            const formData = {
+                flightId: document.getElementById('flightId').value,
+                hotelId: document.getElementById('hotelId').value,
+                activityId: document.getElementById('activityId').value,
+                comboId: document.getElementById('comboId').value,
+                promoId: document.getElementById('promoId').value,
+                quantity: document.getElementById('quantity').value,
+                checkInDate: formatDateToYMDHIS(document.getElementById('checkInDate').value),
+                checkOutDate: formatDateToYMDHIS(document.getElementById('checkOutDate').value)
+            };
+            callAPI('http://localhost:3000/bookings', 'POST', formData);
+        }
+
+        function getAllBookings() {
+            callAPI('http://localhost:3000/bookings/bulk', 'GET');
+        }
+
+        function getBookingById() {
+            const id = document.getElementById('bookingId').value;
+            callAPI(`http://localhost:3000/bookings/${id}`, 'GET');
+        }
+
+        function updateBooking() {
+            const id = document.getElementById('updateBookingId').value;
+            const body = {
+                totalPrice: document.getElementById('updateTotalPrice').value,
+                status: document.getElementById('updateStatus').value
+            };
+            callAPI(`http://localhost:3000/bookings/${id}`, 'PATCH', body);
+        }
+
+        function deleteBooking() {
+            const id = document.getElementById('deleteBookingId').value;
+            callAPI(`http://localhost:3000/bookings/${id}`, 'DELETE');
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Booking API</h1>
+
+    <div>
+        <label for="token">JWT Token:</label>
+        <input type="text" id="token" placeholder="Enter your JWT token">
+    </div>
+
+    <h2>Create Booking</h2>
+    <div>
+        <label>Flight ID:</label> <input type="text" id="flightId"><br>
+        <label>Hotel ID:</label> <input type="text" id="hotelId"><br>
+        <label>Activity ID:</label> <input type="text" id="activityId"><br>
+        <label>Combo ID:</label> <input type="text" id="comboId"><br>
+        <label>Promo ID:</label> <input type="text" id="promoId"><br>
+        <label>Quantity:</label> <input type="number" id="quantity"><br>
+        <label>Check-in Date (YYYY-MM-DD HH:mm:ss):</label> <input type="datetime-local" id="checkInDate"><br>
+        <label>Check-out Date (YYYY-MM-DD HH:mm:ss):</label> <input type="datetime-local" id="checkOutDate"><br>
+        <button onclick="createBooking()">Create Booking</button>
+    </div>
+
+    <h2>Get All Bookings</h2>
+    <div>
+        <button onclick="getAllBookings()">Get All Bookings</button>
+    </div>
+
+    <h2>Get Booking by ID</h2>
+    <div>
+        <label>Booking ID:</label> <input type="text" id="bookingId">
+        <button onclick="getBookingById()">Get Booking</button>
+    </div>
+
+    <h2>Update Booking</h2>
+    <div>
+        <label>Booking ID:</label> <input type="text" id="updateBookingId"><br>
+        <label>Total Price:</label> <input type="number" id="updateTotalPrice"><br>
+        <label>Status:</label> <input type="text" id="updateStatus"><br>
+        <button onclick="updateBooking()">Update Booking</button>
+    </div>
+
+    <h2>Delete Booking</h2>
+    <div>
+        <label>Booking ID:</label> <input type="text" id="deleteBookingId">
+        <button onclick="deleteBooking()">Delete Booking</button>
+    </div>
+
+    <h2>Response</h2>
+    <pre id="response"></pre>
+</body>
+</html>
