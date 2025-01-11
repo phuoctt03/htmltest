@@ -49,6 +49,8 @@
             formData.append('flightId', document.getElementById('comboFlightId').value);
             formData.append('hotelId', document.getElementById('comboHotelId').value);
             formData.append('activityId', document.getElementById('comboActivityId').value);
+            formData.append('checkInDate', formatDateToYMDHIS(document.getElementById('checkInDate').value));
+            formData.append('checkOutDate', formatDateToYMDHIS(document.getElementById('checkOutDate').value));
 
             callAPI('https://symfony-9z0y.onrender.com/combos', 'POST', formData, true);
         }
@@ -94,6 +96,8 @@
         <label>Flight ID:</label> <input type="text" id="comboFlightId"><br>
         <label>Hotel ID:</label> <input type="text" id="comboHotelId"><br>
         <label>Activity ID:</label> <input type="text" id="comboActivityId"><br>
+        <label>Check-in Date (YYYY-MM-DD HH:mm:ss):</label> <input type="datetime-local" id="checkInDate"><br>
+        <label>Check-out Date (YYYY-MM-DD HH:mm:ss):</label> <input type="datetime-local" id="checkOutDate"><br>
         <label>File:</label> <input type="file" id="comboFile"><br>
         <button onclick="createCombo()">Create Combo</button>
     </div>

@@ -26,6 +26,17 @@
             document.getElementById('response').textContent = JSON.stringify(result, null, 2);
         }
 
+        function formatDateToYMDHIS(datetimeLocalValue) {
+            const date = new Date(datetimeLocalValue);
+            const year = date.getUTCFullYear();
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(date.getUTCDate()).padStart(2, '0');
+            const hours = String(date.getUTCHours()).padStart(2, '0');
+            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
         function getAllComboDetails() {
             callAPI('https://symfony-9z0y.onrender.com/combo-details/bulk', 'GET');
         }
@@ -41,6 +52,8 @@
                 flightId: document.getElementById('updateFlightId').value,
                 hotelId: document.getElementById('updateHotelId').value,
                 activityId: document.getElementById('updateActivityId').value,
+                checkInDate: formatDateToYMDHIS(document.getElementById('updateCheckInDate').value),
+                checkOutDate: formatDateToYMDHIS(document.getElementById('updateCheckOutDate').value),
             };
             callAPI(`https://symfony-9z0y.onrender.com/combo-details/${id}`, 'PATCH', body);
         }
@@ -69,6 +82,8 @@
         <label>Flight ID:</label> <input type="text" id="updateFlightId"><br>
         <label>Hotel ID:</label> <input type="text" id="updateHotelId"><br>
         <label>Activity ID:</label> <input type="text" id="updateActivityId"><br>
+        <label>Check-in Date (YYYY-MM-DD):</label> <input type="datetime-local" id="updateCheckInDate"><br>
+        <label>Check-out Date (YYYY-MM-DD):</label> <input type="datetime-local" id="updateCheckOutDate"><br>
         <button onclick="updateComboDetail()">Update Combo Detail</button>
     </div>
 
